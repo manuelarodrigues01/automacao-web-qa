@@ -20,4 +20,4 @@ Projeto de automação de testes End-to-End (E2E) desenvolvido com **Cypress** p
 
 1. **Clonar o repositório:**
    ```bash
-   git clone [https://github.com/manuelarodrigues01/automacao-web-qa.git](https://github.com/manuelarodrigues01/automacao-web-qa.git)
+   git clone https://github.com/manuelarodrigues01/automacao-web-qa.git
