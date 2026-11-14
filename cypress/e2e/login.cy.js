@@ -1,33 +1,48 @@
-describe('Testes de E-commerce - SauceDemo', () => {
+import LoginPage from '../support/pages/LoginPage';
+
+describe('Funcionalidade: Login', () => {
+
+  const timestamp = Date.now();
+  const usuario = {
+    nome: 'Utilizador QA',
+    email: `teste_login_${timestamp}@mail.com`,
+    senha: 'SenhaForte123'
+  };
+
+  before(() => {
+    // Regista o utilizador uma única vez antes de rodar os testes
+    cy.visit('https://automationexercise.com/login');
+    cy.get('[data-qa="signup-name"]').type(usuario.nome);
+    cy.get('[data-qa="signup-email"]').type(usuario.email);
+    cy.get('[data-qa="signup-button"]').click();
+    cy.get('#id_gender1').check();
+    cy.get('[data-qa="password"]').type(usuario.senha);
+    cy.get('[data-qa="first_name"]').type('QA');
+    cy.get('[data-qa="last_name"]').type('User');
+    cy.get('[data-qa="address"]').type('Rua Exemplo');
+    cy.get('[data-qa="country"]').select('United States');
+    cy.get('[data-qa="state"]').type('California');
+    cy.get('[data-qa="city"]').type('Los Angeles');
+    cy.get('[data-qa="zipcode"]').type('90001');
+    cy.get('[data-qa="mobile_number"]').type('123456789');
+    cy.get('[data-qa="create-account"]').click();
+    cy.get('[data-qa="continue-button"]').click();
+    cy.get('a[href="/logout"]').click();
+  });
+
   beforeEach(() => {
-    cy.visit('https://www.saucedemo.com/')
-    cy.get('[data-test="username"]').type('standard_user')
-    cy.get('[data-test="password"]').type('secret_sauce')
-    cy.get('[data-test="login-button"]').click()
-  })
+    cy.visit('https://automationexercise.com/');
+    LoginPage.acessarPaginaLogin();
+  });
 
-  it('Deve adicionar produto ao carrinho e finalizar a compra', () => {
-    // 1. Adiciona a mochila ao carrinho
-    cy.get('[data-test="add-to-cart-sauce-labs-backpack"]').click()
+  it('Deve realizar login com sucesso', () => {
+    LoginPage.preencherLogin(usuario.email, usuario.senha);
+    LoginPage.validarLoginComSucesso(usuario.nome);
+  });
 
-    // 2. Clica no ícone do carrinho
-    cy.get('.shopping_cart_link').click()
+  it('Deve exibir mensagem de erro ao inserir credenciais inválidas', () => {
+    LoginPage.preencherLogin('usuario_inexistente@mail.com', 'senhaErrada123');
+    LoginPage.validarMensagemErro();
+  });
 
-    // 3. Avança para o Checkout
-    cy.get('[data-test="checkout"]').click()
-
-    // 4. Preenche os dados de envio
-    cy.get('[data-test="firstName"]').type('Maria')
-    cy.get('[data-test="lastName"]').type('QA')
-    cy.get('[data-test="postalCode"]').type('1000-001')
-    cy.get('[data-test="continue"]').click()
-
-    // 5. Finaliza a encomenda
-    cy.get('[data-test="finish"]').click()
-
-    // 6. Valida a mensagem de sucesso
-    cy.get('.complete-header')
-      .should('be.visible')
-      .and('have.text', 'Thank you for your order!')
-  })
-})
+});

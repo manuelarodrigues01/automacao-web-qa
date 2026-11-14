@@ -1,19 +1,24 @@
-import cadastroPage from '../support/pages/CadastroPage'
+import CadastroPage from '../support/pages/CadastroPage';
 
-describe('Cadastro de Utilizador', () => {
-  it('Deve efetuar o registo de um novo utilizador com sucesso', () => {
-    cy.visit('https://automationexercise.com/login')
+describe('Funcionalidade: Registo de Novo Utilizador', () => {
 
-    const emailDinamico = `qa_test_${Date.now()}@mail.com`
+  beforeEach(() => {
+    cy.visit('https://automationexercise.com/login');
+  });
 
-    // Executa as ações através do Page Object
-    cadastroPage.preencherFormularioCompleto({
-      nome: 'Manuela Rodrigues',
-      email: emailDinamico,
-      senha: 'SenhaSegura123'
-    })
+  it('Deve registar um novo utilizador com sucesso', () => {
+    const timestamp = Date.now();
+    const usuario = {
+      nome: 'Utilizador QA',
+      email: `teste_qa_${timestamp}@mail.com`,
+      senha: 'SenhaForte123' // Adiciona a senha aqui para evitar o 'undefined'
+    };
 
-    // Validação
-    cadastroPage.validarCadastroComSucesso()
-  })
-})
+    // 1. Preenche todo o formulário passando o objeto completo
+    CadastroPage.preencherFormularioCompleto(usuario);
+
+    // 2. Valida se a conta foi criada com sucesso
+    CadastroPage.validarCadastroComSucesso();
+  });
+
+});
