@@ -18,3 +18,4 @@ jobs:
         with:
           browser: chrome
           headless: true
+          command: npx cypress run
