@@ -27,7 +27,7 @@ describe('Cenários Negativos - Login de Utilizador', () => {
 
     // Validar a mensagem de erro
     cy.get('.login-form form p')
-      .should('be.visible')
+      .should('be.visible')cy.get('p', { timeout: 10000 }).should('be.visible').and('contain', 'Sua mensagem de erro aqui')
       .and('contain', 'Your email or password is incorrect.');
   });
 });
