@@ -1,8 +1,16 @@
-continuarComprando() {
-  cy.get('.btn-success.close-modal').first().click({ force: true });
-  cy.get('.btn-success.close-modal').should('not.be.visible');
-}
+import ProdutosPage from '../support/pages/ProdutosPage';
 
-irParaCarrinho() {
-  cy.get('a[href="/view_cart"]').first().click();
-}
+describe('Funcionalidade: Carrinho de Compras', () => {
+  beforeEach(() => {
+    cy.visit('https://automationexercise.com/');
+  });
+
+  it('Deve adicionar um produto ao carrinho com sucesso', () => {
+    ProdutosPage.acessarPaginaProdutos();
+    ProdutosPage.pesquisarProduto('Top');
+    ProdutosPage.adicionarPrimeiroProdutoAoCarrinho();
+    ProdutosPage.continuarComprando();
+    ProdutosPage.irParaCarrinho();
+    ProdutosPage.validarProdutoNoCarrinho();
+  });
+});
