@@ -13,4 +13,6 @@ describe('Funcionalidade: Carrinho de Compras', () => {
     ProdutosPage.irParaCarrinho();
     ProdutosPage.validarProdutoNoCarrinho();
   });
-});
+});acessarPaginaProdutos() {
+  cy.get('a[href="/products"]').first().click();
+}

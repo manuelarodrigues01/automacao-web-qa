@@ -27,4 +27,7 @@ class ProdutosPage {
   }
 }
 
-export default new ProdutosPage();
+export default new ProdutosPage();continuarComprando() {
+  cy.get('.btn-success.close-modal').first().click({ force: true });
+  cy.get('#cartModal', { timeout: 10000 }).should('not.be.visible');
+}
