@@ -1,6 +1,6 @@
 class ProdutosPage {
   acessarPaginaProdutos() {
-    cy.get('a[href="/products"]').click();
+    cy.get('a[href="/products"]').first().click();
   }
 
   pesquisarProduto(nomeProduto) {
@@ -14,7 +14,7 @@ class ProdutosPage {
 
   continuarComprando() {
     cy.get('.btn-success.close-modal').first().click({ force: true });
-    cy.get('.btn-success.close-modal').should('not.be.visible');
+    cy.get('#cartModal', { timeout: 10000 }).should('not.be.visible');
   }
 
   irParaCarrinho() {
@@ -27,7 +27,4 @@ class ProdutosPage {
   }
 }
 
-export default new ProdutosPage();continuarComprando() {
-  cy.get('.btn-success.close-modal').first().click({ force: true });
-  cy.get('#cartModal', { timeout: 10000 }).should('not.be.visible');
-}
+export default new ProdutosPage();
